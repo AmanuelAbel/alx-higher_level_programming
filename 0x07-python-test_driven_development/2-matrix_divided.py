@@ -1,37 +1,41 @@
 #!/usr/bin/python3
 """
-This module contains a function that divides all elements of a matrix.
+Module 2-matrix_divide
+Contains a function to divide all elements if a natrux
+recieves a matrix and a divider
 """
 
 
 def matrix_divided(matrix, div):
     """
-    matrix_divided- Function that divides all elemets of a matrix.
+    matrix_divided: divides all elements of a matrix
     Args:
-        matrix: List of lists to be divided.
-        div: divisor.
+        matrix (int, float):  list of lists of integers or floats
+        div (int): divident
     Returns:
-        A matrix with te result of division.
+        int
+    Raises:
+        TypeError: If matrix is not list of lists containing int or float.
+        TypeError: If sublists are not all same size.
+        TypeError: If div is not int or float.
+        ZeroDivisionError: If div is zero.
     """
-    err = 'matrix must be a matrix (list of lists) of integers/floats'
-    err1 = 'Each row of the matrix must have the same size'
-    ans = []
-    if((div is None) or (type(div) != int) and (type(div) != float)):
+    if not isinstance(matrix, list) or len(matrix) == 0:
+        raise TypeError("matrix must be a matrix (list of lists) " +
+                        "of integers/floats")
+    if not isinstance(div, (int, float)):
         raise TypeError("div must be a number")
     if div == 0:
         raise ZeroDivisionError("division by zero")
-    if (type(matrix) != list):
-        raise TypeError(err)
 
-    for i in range(0, len(matrix)):
-        if (type(matrix[i]) != list):
-            raise TypeError(err)
-        put_in = []
-        for j in range(0, len(matrix[i])):
-            if ((type(matrix[i][j]) != int) and (type(matrix[i][j]) != float)):
-                raise TypeError(err)
-            if (len(matrix[0]) != len(matrix[i])):
-                raise TypeError(err1)
-            put_in.append(round((matrix[i][j]) / div, 2))
-        ans.append(put_in)
-    return (ans)
+    for i in matrix:
+        if not isinstance(i, list) or len(i) == 0:
+            raise TypeError("matrix must be a matrix (list of lists) " +
+                            "of integers/floats")
+        if len(i) != len(matrix[0]):
+            raise TypeError("Each row of the matrix must have the same size")
+        for j in i:
+            if not isinstance(j, (int, float)):
+                raise TypeError("matrix must be a matrix (list of lists) " +
+                                "of integers/floats")
+    return [[round(j / div, 2) for j in i] for i in matrix]
